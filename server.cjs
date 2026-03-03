@@ -5,7 +5,7 @@ const cors       = require('cors');
 const bodyParser = require('body-parser');
 
 const app  = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,7 +16,8 @@ const db = mysql.createConnection({
   host    : process.env.DB_HOST,
   user    : process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  port    : parseInt(process.env.DB_PORT) || 3306
 });
 
 db.connect(err => {
