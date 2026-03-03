@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PK FitZone Gym – Transform Your Body Today</title>
+<style>
+  :root {
+    --red: #e63946;
+    --dark: #0d0d0d;
+    --dark2: #1a1a1a;
+    --dark3: #222;
+    --gray: #888;
+    --light: #f5f5f5;
+    --white: #fff;
+    --gold: #ffd60a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Segoe UI',sans-serif; background:var(--dark); color:var(--white); overflow-x:hidden; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--dark2); }
+  ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+
+  nav {
+    position:fixed; top:0; width:100%; z-index:1000;
+    background:rgba(13,13,13,0.95); backdrop-filter:blur(10px);
+    padding:0 5%; display:flex; align-items:center; justify-content:space-between;
+    height:70px; border-bottom:1px solid rgba(255,255,255,0.05);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow:0 4px 30px rgba(230,57,70,0.2); }
+  .logo { font-size:1.8rem; font-weight:900; color:var(--white); letter-spacing:1px; }
+  .logo span { color:var(--red); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a {
+    color:#ccc; text-decoration:none; font-weight:500; font-size:.95rem;
+    transition:.3s; position:relative; padding-bottom:4px;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:0; left:0; width:0; height:2px;
+    background:var(--red); transition:.3s;
+  }
+  .nav-links a:hover { color:var(--white); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-links a.active { color:var(--red); }
+  .nav-cta {
+    background:var(--red); color:var(--white); padding:.5rem 1.4rem;
+    border-radius:25px; text-decoration:none; font-weight:700; font-size:.9rem;
+    transition:.3s; border:2px solid var(--red);
+  }
+  .nav-cta:hover { background:transparent; color:var(--red); }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+  .hamburger span { display:block; width:25px; height:2px; background:var(--white); transition:.3s; }
+
+  .page { display:none; padding-top:70px; }
+  .page.active { display:block; }
+
+  .hero {
+    min-height:100vh; display:flex; align-items:center;
+    background: linear-gradient(135deg, rgba(13,13,13,.95) 0%, rgba(230,57,70,.15) 100%),
+      url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600') center/cover no-repeat;
+    padding:0 5%; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-50%; right:-10%; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(230,57,70,.15) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+  .hero-content { max-width:650px; animation:fadeInUp .8s ease; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(40px);} to{opacity:1;transform:translateY(0);} }
+  .hero-badge {
+    display:inline-block; background:rgba(230,57,70,.2); border:1px solid var(--red);
+    color:var(--red); padding:.3rem 1rem; border-radius:20px; font-size:.85rem;
+    font-weight:600; margin-bottom:1.5rem; letter-spacing:1px;
+  }
+  .hero h1 { font-size:clamp(2.5rem,5vw,4.5rem); font-weight:900; line-height:1.1; margin-bottom:1.2rem; text-transform:uppercase; }
+  .hero h1 span { color:var(--red); }
+  .hero p { font-size:1.1rem; color:#aaa; line-height:1.7; margin-bottom:2rem; max-width:500px; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary {
+    background:var(--red); color:var(--white); padding:.85rem 2.2rem;
+    border-radius:30px; text-decoration:none; font-weight:700; font-size:1rem;
+    transition:.3s; border:2px solid var(--red); display:inline-block;
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(230,57,70,.4); }
+  .btn-outline {
+    background:transparent; color:var(--white); padding:.85rem 2.2rem;
+    border-radius:30px; text-decoration:none; font-weight:700; font-size:1rem;
+    transition:.3s; border:2px solid rgba(255,255,255,.3); display:inline-block;
+  }
+  .btn-outline:hover { border-color:var(--white); transform:translateY(-3px); }
+  .hero-stats {
+    display:flex; gap:2.5rem; margin-top:3rem; padding-top:2rem;
+    border-top:1px solid rgba(255,255,255,.1); flex-wrap:wrap;
+  }
+  .stat h3 { font-size:2rem; font-weight:900; color:var(--red); }
+  .stat p { color:#888; font-size:.85rem; }
+
+  section { padding:80px 5%; }
+  .section-label {
+    display:inline-block; color:var(--red); font-size:.85rem; font-weight:700;
+    letter-spacing:2px; text-transform:uppercase; margin-bottom:.8rem;
+  }
+  .section-title { font-size:clamp(1.8rem,3vw,2.8rem); font-weight:900; margin-bottom:1rem; }
+  .section-subtitle { color:#888; font-size:1rem; line-height:1.7; max-width:550px; }
+  .section-header { text-align:center; margin-bottom:3.5rem; }
+  .section-header .section-subtitle { margin:0 auto; }
+
+  .intro { background:var(--dark2); }
+  .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  .intro-img { border-radius:20px; overflow:hidden; position:relative; box-shadow:0 20px 60px rgba(230,57,70,.2); }
+  .intro-img img { width:100%; height:400px; object-fit:cover; display:block; }
+  .intro-img::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(230,57,70,.2), transparent); }
+  .intro-text p { color:#aaa; line-height:1.8; margin-bottom:1.5rem; }
+  .intro-features { display:flex; flex-direction:column; gap:1rem; margin-top:2rem; }
+  .feat-item { display:flex; gap:1rem; align-items:flex-start; }
+  .feat-icon {
+    width:45px; height:45px; background:rgba(230,57,70,.15); border:1px solid rgba(230,57,70,.3);
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:1.2rem; flex-shrink:0;
+  }
+  .feat-text h4 { font-weight:700; margin-bottom:.2rem; }
+  .feat-text p { color:#888; font-size:.9rem; margin:0; }
+
+  .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; }
+  .why-card {
+    background:var(--dark2); border:1px solid rgba(255,255,255,.06);
+    border-radius:16px; padding:2rem; transition:.3s; cursor:default; position:relative; overflow:hidden;
+  }
+  .why-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--red); transition:.4s; }
+  .why-card:hover::before { height:100%; }
+  .why-card:hover { transform:translateY(-5px); border-color:rgba(230,57,70,.3); box-shadow:0 15px 40px rgba(230,57,70,.1); }
+  .why-icon { font-size:2.5rem; margin-bottom:1rem; }
+  .why-card h3 { font-size:1.15rem; font-weight:700; margin-bottom:.7rem; }
+  .why-card p { color:#888; font-size:.9rem; line-height:1.6; }
+
+  .membership { background:var(--dark2); }
+  .plans-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+  .plan-card {
+    background:var(--dark3); border:1px solid rgba(255,255,255,.08);
+    border-radius:20px; padding:2.5rem 2rem; transition:.3s; position:relative; overflow:hidden;
+  }
+  .plan-card.popular { border-color:var(--red); transform:scale(1.03); }
+  .plan-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(230,57,70,.15); }
+  .plan-card.popular:hover { transform:scale(1.03) translateY(-8px); }
+  .popular-badge {
+    position:absolute; top:1.2rem; right:1.2rem;
+    background:var(--red); color:var(--white); font-size:.75rem;
+    font-weight:700; padding:.3rem .8rem; border-radius:20px;
+  }
+  .plan-name { color:var(--gray); font-size:.9rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:.5rem; }
+  .plan-price { font-size:3rem; font-weight:900; margin-bottom:.3rem; }
+  .plan-price span { font-size:1rem; color:#888; font-weight:400; }
+  .plan-divider { height:1px; background:rgba(255,255,255,.08); margin:1.5rem 0; }
+  .plan-features { list-style:none; display:flex; flex-direction:column; gap:.8rem; margin-bottom:2rem; }
+  .plan-features li { display:flex; gap:.7rem; align-items:center; font-size:.95rem; color:#ccc; }
+  .plan-features li::before { content:'✓'; color:var(--red); font-weight:900; }
+  .plan-features li.off { color:#555; }
+  .plan-features li.off::before { content:'✗'; color:#444; }
+  .plan-btn { display:block; text-align:center; padding:.85rem; border-radius:30px; font-weight:700; text-decoration:none; transition:.3s; border:2px solid; }
+  .plan-btn-filled { background:var(--red); color:var(--white); border-color:var(--red); }
+  .plan-btn-filled:hover { background:transparent; color:var(--red); }
+  .plan-btn-outline { background:transparent; color:var(--white); border-color:rgba(255,255,255,.2); }
+  .plan-btn-outline:hover { border-color:var(--red); color:var(--red); }
+
+  .trainers-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.5rem; }
+  .trainer-card { background:var(--dark2); border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,.06); transition:.3s; cursor:default; }
+  .trainer-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(230,57,70,.15); }
+  .trainer-img { position:relative; overflow:hidden; height:280px; }
+  .trainer-img img { width:100%; height:100%; object-fit:cover; transition:.4s; }
+  .trainer-card:hover .trainer-img img { transform:scale(1.08); }
+  .trainer-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(13,13,13,.9), transparent); display:flex; align-items:flex-end; padding:1.5rem; opacity:0; transition:.3s; }
+  .trainer-card:hover .trainer-overlay { opacity:1; }
+  .trainer-social { display:flex; gap:.7rem; }
+  .trainer-social a { width:35px; height:35px; background:var(--red); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--white); font-size:.85rem; transition:.2s; }
+  .trainer-social a:hover { background:var(--white); color:var(--red); }
+  .trainer-info { padding:1.5rem; }
+  .trainer-info h3 { font-size:1.1rem; font-weight:700; margin-bottom:.3rem; }
+  .trainer-spec { color:var(--red); font-size:.85rem; font-weight:600; margin-bottom:.5rem; }
+  .trainer-exp { color:#888; font-size:.85rem; }
+
+  .contact { background:var(--dark2); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:4rem; align-items:start; }
+  .contact-info { display:flex; flex-direction:column; gap:1.5rem; }
+  .contact-item { display:flex; gap:1rem; align-items:flex-start; }
+  .contact-icon { width:50px; height:50px; background:rgba(230,57,70,.15); border:1px solid rgba(230,57,70,.3); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+  .contact-item-text h4 { font-weight:700; margin-bottom:.3rem; }
+  .contact-item-text p { color:#888; font-size:.9rem; }
+  .contact-item-text a { color:#888; text-decoration:none; font-size:.9rem; }
+  .contact-item-text a:hover { color:var(--red); }
+  .contact-form { background:var(--dark3); border-radius:20px; padding:2.5rem; border:1px solid rgba(255,255,255,.06); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+  .form-group { display:flex; flex-direction:column; gap:.5rem; margin-bottom:1rem; }
+  .form-group label { font-size:.9rem; color:#ccc; font-weight:500; }
+  .form-group input, .form-group select, .form-group textarea {
+    background:var(--dark2); border:1px solid rgba(255,255,255,.1);
+    color:var(--white); padding:.85rem 1rem; border-radius:10px; font-size:.95rem;
+    outline:none; transition:.3s; font-family:inherit;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--red); box-shadow:0 0 0 3px rgba(230,57,70,.1); }
+  .form-group select option { background:var(--dark3); }
+  .form-group textarea { resize:vertical; min-height:120px; }
+  .submit-btn { width:100%; padding:1rem; background:var(--red); color:var(--white); border:none; border-radius:30px; font-size:1rem; font-weight:700; cursor:pointer; transition:.3s; font-family:inherit; }
+  .submit-btn:hover { background:#c1121f; transform:translateY(-2px); box-shadow:0 8px 25px rgba(230,57,70,.4); }
+  .form-success { display:none; text-align:center; padding:2rem; color:#4ade80; font-weight:600; font-size:1.1rem; }
+
+  .map-section { padding:0 5% 80px; }
+  .map-container { border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,.08); height:350px; background:var(--dark2); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem; color:#888; font-size:1rem; }
+  .map-placeholder { font-size:3rem; }
+
+  .about-hero {
+    min-height:50vh; display:flex; align-items:center;
+    background:linear-gradient(135deg, rgba(13,13,13,.9), rgba(230,57,70,.1)),
+      url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600') center/cover no-repeat;
+    padding:0 5%; text-align:center; justify-content:center;
+  }
+  .page-hero-content { text-align:center; animation:fadeInUp .6s ease; }
+  .page-hero-content h1 { font-size:clamp(2rem,4vw,3.5rem); font-weight:900; margin-bottom:1rem; }
+  .page-hero-content p { color:#aaa; font-size:1.1rem; }
+
+  .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  .story-text p { color:#aaa; line-height:1.8; margin-bottom:1.2rem; }
+  .story-img { border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(230,57,70,.2); }
+  .story-img img { width:100%; height:400px; object-fit:cover; }
+
+  .achievements { background:var(--dark2); }
+  .ach-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; }
+  .ach-card { text-align:center; padding:2.5rem 1rem; background:var(--dark3); border-radius:16px; border:1px solid rgba(255,255,255,.06); }
+  .ach-icon { font-size:3rem; margin-bottom:1rem; }
+  .ach-num { font-size:3rem; font-weight:900; color:var(--red); }
+  .ach-label { color:#888; margin-top:.5rem; }
+
+  .trainers-page-hero {
+    min-height:50vh; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(13,13,13,.9), rgba(230,57,70,.1)),
+      url('https://images.unsplash.com/photo-1576678927484-cc907957088c?w=1600') center/cover;
+    padding:0 5%; text-align:center;
+  }
+  .trainer-full-card { background:var(--dark2); border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,.06); transition:.3s; display:flex; flex-direction:column; }
+  .trainer-full-card:hover { box-shadow:0 20px 50px rgba(230,57,70,.15); transform:translateY(-5px); }
+  .trainer-full-img { height:300px; overflow:hidden; }
+  .trainer-full-img img { width:100%; height:100%; object-fit:cover; transition:.4s; }
+  .trainer-full-card:hover .trainer-full-img img { transform:scale(1.05); }
+  .trainer-full-info { padding:2rem; }
+  .trainer-full-info h3 { font-size:1.3rem; font-weight:800; margin-bottom:.3rem; }
+  .trainer-tags { display:flex; gap:.5rem; flex-wrap:wrap; margin:1rem 0; }
+  .tag { background:rgba(230,57,70,.15); color:var(--red); font-size:.8rem; padding:.3rem .8rem; border-radius:20px; font-weight:600; }
+  .trainer-full-info p { color:#888; font-size:.9rem; line-height:1.7; }
+
+  .pricing-hero {
+    min-height:50vh; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(13,13,13,.9), rgba(230,57,70,.1)),
+      url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1600') center/cover;
+    text-align:center; padding:0 5%;
+  }
+  .compare-table { width:100%; border-collapse:collapse; margin-top:3rem; }
+  .compare-table th, .compare-table td { padding:1rem 1.5rem; text-align:left; border-bottom:1px solid rgba(255,255,255,.06); }
+  .compare-table thead th { background:var(--dark3); color:#888; font-size:.85rem; text-transform:uppercase; }
+  .compare-table tbody tr:hover { background:rgba(255,255,255,.02); }
+  .compare-table td:first-child { color:#ccc; }
+  .check { color:#4ade80; font-size:1.1rem; }
+  .cross { color:#555; font-size:1.1rem; }
+
+  footer { background:var(--dark2); padding:60px 5% 30px; border-top:1px solid rgba(255,255,255,.05); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+  .footer-brand .logo { font-size:1.5rem; display:inline-block; margin-bottom:1rem; }
+  .footer-brand p { color:#888; font-size:.9rem; line-height:1.7; max-width:280px; }
+  .footer-col h4 { font-weight:700; margin-bottom:1.2rem; font-size:.95rem; }
+  .footer-links { list-style:none; display:flex; flex-direction:column; gap:.7rem; }
+  .footer-links a { color:#888; text-decoration:none; font-size:.9rem; transition:.2s; }
+  .footer-links a:hover { color:var(--red); padding-left:5px; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,.05); padding-top:1.5rem; text-align:center; color:#555; font-size:.85rem; }
+  .footer-bottom span { color:var(--red); }
+
+  .mobile-menu {
+    position:fixed; top:70px; left:0; width:100%; background:rgba(13,13,13,.98);
+    backdrop-filter:blur(10px); padding:2rem 5%; display:none; flex-direction:column;
+    gap:1.2rem; z-index:999; border-bottom:1px solid rgba(255,255,255,.05);
+    transform:translateY(-20px); opacity:0; transition:.3s;
+  }
+  .mobile-menu.open { display:flex; transform:translateY(0); opacity:1; }
+  .mobile-menu a { color:#ccc; text-decoration:none; font-size:1.1rem; font-weight:500; transition:.2s; }
+  .mobile-menu a:hover { color:var(--red); }
+
+  @media(max-width:900px) {
+    .intro-grid, .story-grid, .contact-grid { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .form-row { grid-template-columns:1fr; }
+  }
+  @media(max-width:600px) {
+    .nav-links, .nav-cta { display:none; }
+    .hamburger { display:flex; }
+    .hero h1 { font-size:2.2rem; }
+    .footer-grid { grid-template-columns:1fr; }
+    .plans-grid { grid-template-columns:1fr; }
+    .plan-card.popular { transform:none; }
+  }
+
+  .reveal { opacity:0; transform:translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo">PK <span>FitZone</span></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('pricing')" id="nav-pricing">Pricing</a></li>
+    <li><a href="#" onclick="showPage('trainers')" id="nav-trainers">Trainers</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showPage('pricing')">Join Now</a>
+  <div class="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showPage('home');toggleMobile()">Home</a>
+  <a href="#" onclick="showPage('about');toggleMobile()">About</a>
+  <a href="#" onclick="showPage('pricing');toggleMobile()">Pricing</a>
+  <a href="#" onclick="showPage('trainers');toggleMobile()">Trainers</a>
+  <a href="#" onclick="showPage('contact');toggleMobile()">Contact</a>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🔥 #1 GYM IN LUCKNOW</div>
+      <h1>Transform Your <span>Body</span> Today</h1>
+      <p>Join PK FitZone and unlock the best version of yourself. World-class equipment, expert trainers, and a community that pushes you to your limits.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary" onclick="showPage('pricing')">Join Now →</a>
+        <a href="#" class="btn-outline" onclick="showPage('about')">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><h3>2500+</h3><p>Active Members</p></div>
+        <div class="stat"><h3>15+</h3><p>Expert Trainers</p></div>
+        <div class="stat"><h3>10yr</h3><p>Experience</p></div>
+        <div class="stat"><h3>98%</h3><p>Satisfaction</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div class="intro-img reveal">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800" alt="Gym Interior">
+      </div>
+      <div class="intro-text reveal">
+        <span class="section-label">About PK FitZone</span>
+        <h2 class="section-title">More Than Just a Gym</h2>
+        <p>PK FitZone is Lucknow's premier fitness destination, designed to help you achieve your health goals with cutting-edge equipment and personalized coaching.</p>
+        <p>Whether you're a beginner or a seasoned athlete, our facilities and trainers are here to support every step of your journey.</p>
+        <div class="intro-features">
+          <div class="feat-item">
+            <div class="feat-icon">💪</div>
+            <div class="feat-text"><h4>State-of-the-Art Equipment</h4><p>500+ machines and free weights for every workout</p></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon">🧠</div>
+            <div class="feat-text"><h4>Expert Coaching</h4><p>Certified trainers with personalized plans</p></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon">⏰</div>
+            <div class="feat-text"><h4>Open 24/7</h4><p>Train on your schedule, any time of day</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="section-label">Why PK FitZone</span>
+      <h2 class="section-title">Everything You Need to Succeed</h2>
+      <p class="section-subtitle">We provide the best environment and resources to help you reach your fitness goals faster.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><div class="why-icon">🏋️</div><h3>500+ Equipment</h3><p>Latest cardio, strength, and functional training equipment from top brands.</p></div>
+      <div class="why-card reveal"><div class="why-icon">🥗</div><h3>Nutrition Guidance</h3><p>Personalized diet plans and nutritional coaching to complement your training.</p></div>
+      <div class="why-card reveal"><div class="why-icon">🧘</div><h3>Yoga & Wellness</h3><p>Daily yoga, meditation, and recovery classes for complete mind-body wellness.</p></div>
+      <div class="why-card reveal"><div class="why-icon">🚿</div><h3>Premium Facilities</h3><p>Clean locker rooms, steam rooms, and high-end shower facilities included.</p></div>
+      <div class="why-card reveal"><div class="why-icon">📱</div><h3>PK FitZone App</h3><p>Track workouts, book classes, and monitor progress from your smartphone.</p></div>
+      <div class="why-card reveal"><div class="why-icon">🤝</div><h3>Community</h3><p>Join a motivating community of 2500+ members who support your journey.</p></div>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP -->
+  <section class="membership">
+    <div class="section-header">
+      <span class="section-label">Membership Plans</span>
+      <h2 class="section-title">Simple, Transparent Pricing</h2>
+      <p class="section-subtitle">Choose the plan that fits your goals. No hidden fees. Cancel anytime.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card reveal">
+        <p class="plan-name">Basic</p>
+        <div class="plan-price">₹699<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Gym Access (6AM–10PM)</li>
+          <li>Locker Room Access</li>
+          <li>2 Group Classes/Month</li>
+          <li class="off">Personal Trainer</li>
+          <li class="off">Nutrition Plan</li>
+          <li class="off">Steam Room</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline" onclick="showPage('pricing')">Get Started</a>
+      </div>
+      <div class="plan-card popular reveal">
+        <span class="popular-badge">Most Popular</span>
+        <p class="plan-name">Standard</p>
+        <div class="plan-price">₹999<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>24/7 Gym Access</li>
+          <li>Locker Room + Steam Room</li>
+          <li>Unlimited Group Classes</li>
+          <li>1 PT Session/Week</li>
+          <li>Basic Nutrition Plan</li>
+          <li class="off">Diet Consultation</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-filled" onclick="showPage('pricing')">Get Started</a>
+      </div>
+      <div class="plan-card reveal">
+        <p class="plan-name">Premium</p>
+        <div class="plan-price">₹1599<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>24/7 Gym Access</li>
+          <li>All Facilities Included</li>
+          <li>Unlimited Group Classes</li>
+          <li>Daily PT Sessions</li>
+          <li>Full Nutrition Plan</li>
+          <li>Monthly Diet Consultation</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline" onclick="showPage('pricing')">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINERS -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">Our Trainers</span>
+      <h2 class="section-title">Meet the Experts</h2>
+      <p class="section-subtitle">Our certified trainers are passionate about helping you achieve your fitness goals.</p>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400" alt="Trainer"><div class="trainer-overlay"><div class="trainer-social"><a href="#">in</a><a href="#">ig</a></div></div></div>
+        <div class="trainer-info"><h3>Rahul Sharma</h3><p class="trainer-spec">Strength & Conditioning</p><p class="trainer-exp">⭐ 8 Years Experience</p></div>
+      </div>
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400" alt="Trainer"><div class="trainer-overlay"><div class="trainer-social"><a href="#">in</a><a href="#">ig</a></div></div></div>
+        <div class="trainer-info"><h3>Priya Mehta</h3><p class="trainer-spec">Yoga & Flexibility</p><p class="trainer-exp">⭐ 6 Years Experience</p></div>
+      </div>
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400" alt="Trainer"><div class="trainer-overlay"><div class="trainer-social"><a href="#">in</a><a href="#">ig</a></div></div></div>
+        <div class="trainer-info"><h3>Arjun Kapoor</h3><p class="trainer-spec">CrossFit & Cardio</p><p class="trainer-exp">⭐ 5 Years Experience</p></div>
+      </div>
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400" alt="Trainer"><div class="trainer-overlay"><div class="trainer-social"><a href="#">in</a><a href="#">ig</a></div></div></div>
+        <div class="trainer-info"><h3>Neha Singh</h3><p class="trainer-spec">Nutrition & Weight Loss</p><p class="trainer-exp">⭐ 7 Years Experience</p></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="#" class="btn-primary" onclick="showPage('trainers')">View All Trainers →</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="section-header">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Start Your Journey Today</h2>
+      <p class="section-subtitle">Have questions? Fill out the form and we'll get back to you shortly.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item reveal">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text"><h4>Our Location</h4><p>Lucknow, Uttar Pradesh</p></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📞</div>
+          <div class="contact-item-text"><h4>Phone Number</h4><a href="tel:8899657300">8899657300</a></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📧</div>
+          <div class="contact-item-text"><h4>Email Address</h4><a href="mailto:prashantkumar1891pk@gmail.com">prashantkumar1891pk@gmail.com</a></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">⏰</div>
+          <div class="contact-item-text"><h4>Working Hours</h4><p>Mon – Sat: 5AM – 11PM<br>Sunday: 6AM – 9PM</p></div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div id="formContainer">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Rahul"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="rahul@email.com"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 98765 43210"></div>
+          <div class="form-group">
+            <label>Interested In</label>
+            <select>
+              <option>Select a Plan</option>
+              <option>Basic – ₹699/month</option>
+              <option>Standard – ₹999/month</option>
+              <option>Premium – ₹1599/month</option>
+              <option>Personal Training</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your fitness goals..."></textarea></div>
+          <button class="submit-btn" onclick="submitForm()">Send Message 🚀</button>
+        </div>
+        <div class="form-success" id="formSuccess">✅ Thank you! We'll contact you within 24 hours.</div>
+      </div>
+    </div>
+  </section>
+  <div class="map-section">
+    <div class="map-container reveal">
+      <div class="map-placeholder">🗺️</div>
+      <p>PK FitZone — Lucknow, Uttar Pradesh</p>
+      <p style="font-size:.85rem;color:#666">Google Map integration available with API key</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT PAGE ===== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="page-hero-content">
+      <span class="section-label">Our Story</span>
+      <h1>Built for Champions</h1>
+      <p>Transforming lives through fitness in Lucknow</p>
+    </div>
+  </div>
+  <section>
+    <div class="story-grid">
+      <div class="story-text">
+        <span class="section-label">How It Started</span>
+        <h2 class="section-title">Our Journey</h2>
+        <p>PK FitZone was founded with a simple vision — to create a gym that is accessible, modern, and results-driven for every person in Lucknow.</p>
+        <p>What started as a small studio has grown into a world-class facility serving thousands of active members across the city.</p>
+        <p>We believe fitness is not a luxury — it's a lifestyle. Our mission is to make premium fitness accessible to everyone.</p>
+        <a href="#" class="btn-primary" onclick="showPage('contact')" style="margin-top:1rem;display:inline-block">Get In Touch →</a>
+      </div>
+      <div class="story-img reveal">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800" alt="Gym Story">
+      </div>
+    </div>
+  </section>
+  <section class="achievements">
+    <div class="section-header">
+      <span class="section-label">Achievements</span>
+      <h2 class="section-title">Numbers Don't Lie</h2>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card reveal"><div class="ach-icon">🏆</div><div class="ach-num">10+</div><div class="ach-label">Years of Excellence</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">👥</div><div class="ach-num">2500+</div><div class="ach-label">Happy Members</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">🧑‍🏫</div><div class="ach-num">15+</div><div class="ach-label">Expert Trainers</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">🥇</div><div class="ach-num">50+</div><div class="ach-label">Awards Won</div></div>
+    </div>
+  </section>
+  <section>
+    <div class="section-header">
+      <span class="section-label">Leadership Team</span>
+      <h2 class="section-title">The People Behind PK FitZone</h2>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400" alt="Founder"></div>
+        <div class="trainer-info"><h3>Prashant Kumar</h3><p class="trainer-spec">Founder & Head Coach</p><p class="trainer-exp">⭐ 15 Years Experience</p></div>
+      </div>
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400" alt="Manager"></div>
+        <div class="trainer-info"><h3>Anita Verma</h3><p class="trainer-spec">Operations Manager</p><p class="trainer-exp">⭐ 10 Years Experience</p></div>
+      </div>
+      <div class="trainer-card reveal">
+        <div class="trainer-img"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400" alt="Nutritionist"></div>
+        <div class="trainer-info"><h3>Dr. Rohan Gupta</h3><p class="trainer-spec">Head Nutritionist</p><p class="trainer-exp">⭐ 12 Years Experience</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PRICING PAGE ===== -->
+<div class="page" id="page-pricing">
+  <div class="pricing-hero">
+    <div class="page-hero-content">
+      <span class="section-label">Pricing Plans</span>
+      <h1>Choose Your <span style="color:var(--red)">Plan</span></h1>
+      <p>Flexible plans for every budget. Start your transformation today.</p>
+    </div>
+  </div>
+  <section class="membership">
+    <div class="section-header">
+      <span class="section-label">Monthly Plans</span>
+      <h2 class="section-title">No Hidden Charges</h2>
+      <p class="section-subtitle">All plans include a free 7-day trial. Cancel anytime, no questions asked.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card reveal">
+        <p class="plan-name">Basic</p>
+        <div class="plan-price">₹699<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Gym Access (6AM–10PM)</li>
+          <li>Locker Room Access</li>
+          <li>2 Group Classes/Month</li>
+          <li>Basic Fitness Assessment</li>
+          <li class="off">Personal Trainer</li>
+          <li class="off">Nutrition Plan</li>
+          <li class="off">Steam Room</li>
+          <li class="off">Guest Passes</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline" onclick="showPage('contact')">Get Started</a>
+      </div>
+      <div class="plan-card popular reveal">
+        <span class="popular-badge">Most Popular</span>
+        <p class="plan-name">Standard</p>
+        <div class="plan-price">₹999<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>24/7 Gym Access</li>
+          <li>Locker Room + Steam Room</li>
+          <li>Unlimited Group Classes</li>
+          <li>1 PT Session/Week</li>
+          <li>Basic Nutrition Plan</li>
+          <li>Monthly Assessment</li>
+          <li>2 Guest Passes/Month</li>
+          <li class="off">Diet Consultation</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-filled" onclick="showPage('contact')">Get Started</a>
+      </div>
+      <div class="plan-card reveal">
+        <p class="plan-name">Premium</p>
+        <div class="plan-price">₹1599<span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>24/7 Gym Access</li>
+          <li>All Facilities Included</li>
+          <li>Unlimited Group Classes</li>
+          <li>Daily PT Sessions</li>
+          <li>Full Nutrition Plan</li>
+          <li>Weekly Assessment</li>
+          <li>5 Guest Passes/Month</li>
+          <li>Monthly Diet Consultation</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline" onclick="showPage('contact')">Get Started</a>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="section-header">
+      <span class="section-label">Plan Comparison</span>
+      <h2 class="section-title">What's Included</h2>
+    </div>
+    <div style="overflow-x:auto;" class="reveal">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Feature</th><th>Basic ₹699</th><th>Standard ₹999</th><th>Premium ₹1599</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>24/7 Gym Access</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Group Classes</td><td>2/month</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Personal Trainer</td><td><span class="cross">✗</span></td><td>1/week</td><td>Daily</td></tr>
+          <tr><td>Nutrition Plan</td><td><span class="cross">✗</span></td><td>Basic</td><td>Full</td></tr>
+          <tr><td>Steam Room</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Guest Passes</td><td><span class="cross">✗</span></td><td>2/month</td><td>5/month</td></tr>
+          <tr><td>Diet Consultation</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td>Monthly</td></tr>
+          <tr><td>Progress Tracking</td><td>Basic</td><td>Monthly</td><td>Weekly</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="#" class="btn-primary" onclick="showPage('contact')">Start Free 7-Day Trial →</a>
+    </div>
+  </section>
+</div>
+
+<!-- ===== TRAINERS PAGE ===== -->
+<div class="page" id="page-trainers">
+  <div class="trainers-page-hero">
+    <div class="page-hero-content">
+      <span class="section-label">Expert Team</span>
+      <h1>Our <span style="color:var(--red)">Trainers</span></h1>
+      <p>Certified, passionate, and dedicated to your transformation</p>
+    </div>
+  </div>
+  <section>
+    <div class="section-header">
+      <span class="section-label">Meet the Team</span>
+      <h2 class="section-title">World-Class Expertise</h2>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer-full-card reveal">
+        <div class="trainer-full-img"><img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=500" alt="Rahul"></div>
+        <div class="trainer-full-info"><h3>Rahul Sharma</h3><p class="trainer-spec">Strength & Conditioning Coach</p><div class="trainer-tags"><span class="tag">Powerlifting</span><span class="tag">Bodybuilding</span><span class="tag">HIIT</span></div><p>8 years of experience helping clients build muscle and transform physique. Certified by NSCA and ACE.</p></div>
+      </div>
+      <div class="trainer-full-card reveal">
+        <div class="trainer-full-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=500" alt="Priya"></div>
+        <div class="trainer-full-info"><h3>Priya Mehta</h3><p class="trainer-spec">Yoga & Flexibility Specialist</p><div class="trainer-tags"><span class="tag">Hatha Yoga</span><span class="tag">Pilates</span><span class="tag">Meditation</span></div><p>6 years of yogic practice with 500-hour RYT certification. Specializes in stress relief and mindful movement.</p></div>
+      </div>
+      <div class="trainer-full-card reveal">
+        <div class="trainer-full-img"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=500" alt="Arjun"></div>
+        <div class="trainer-full-info"><h3>Arjun Kapoor</h3><p class="trainer-spec">CrossFit & Cardio Trainer</p><div class="trainer-tags"><span class="tag">CrossFit</span><span class="tag">Endurance</span><span class="tag">Fat Loss</span></div><p>Former national-level athlete with 5 years coaching experience. Specializes in high-intensity functional training.</p></div>
+      </div>
+      <div class="trainer-full-card reveal">
+        <div class="trainer-full-img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500" alt="Neha"></div>
+        <div class="trainer-full-info"><h3>Neha Singh</h3><p class="trainer-spec">Nutrition & Weight Loss Expert</p><div class="trainer-tags"><span class="tag">Nutrition</span><span class="tag">Weight Loss</span><span class="tag">Toning</span></div><p>Registered dietitian with 7 years experience. Creates personalized nutrition and training plans for weight management.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div class="page" id="page-contact">
+  <div class="about-hero" style="background-image:linear-gradient(135deg,rgba(13,13,13,.9),rgba(230,57,70,.1)),url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1600')">
+    <div class="page-hero-content">
+      <span class="section-label">Contact Us</span>
+      <h1>Let's Connect</h1>
+      <p>We'd love to hear from you. Reach out anytime.</p>
+    </div>
+  </div>
+  <section class="contact">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title" style="margin-bottom:1.5rem">We're Here<br>to Help</h2>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text"><h4>Visit Us</h4><p>Lucknow, Uttar Pradesh</p></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📞</div>
+          <div class="contact-item-text"><h4>Call Us</h4><a href="tel:8899657300">8899657300</a></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📧</div>
+          <div class="contact-item-text"><h4>Email Us</h4><a href="mailto:prashantkumar1891pk@gmail.com">prashantkumar1891pk@gmail.com</a></div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">⏰</div>
+          <div class="contact-item-text"><h4>Hours</h4><p>Mon – Sat: 5AM – 11PM<br>Sunday: 6AM – 9PM</p></div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <h3 style="margin-bottom:1.5rem;font-size:1.3rem">Send Us a Message</h3>
+        <div id="formContainer2">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Rahul"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="rahul@email.com"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 98765 43210"></div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select>
+              <option>Membership Inquiry</option>
+              <option>Personal Training</option>
+              <option>Group Classes</option>
+              <option>Pricing Info</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+          <button class="submit-btn" onclick="submitForm2()">Send Message 🚀</button>
+        </div>
+        <div class="form-success" id="formSuccess2">✅ Message sent! We'll get back to you within 24 hours.</div>
+      </div>
+    </div>
+  </section>
+  <div class="map-section">
+    <div class="map-container reveal">
+      <div class="map-placeholder">🗺️</div>
+      <p><strong>PK FitZone</strong> — Lucknow, Uttar Pradesh</p>
+      <p style="font-size:.85rem;color:#666">Embed live map by adding Google Maps API key</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">PK <span>FitZone</span></div>
+      <p>Lucknow's premier fitness destination. Transforming lives through world-class training, expert coaches, and an unbeatable community.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="showPage('home')">Home</a></li>
+        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+        <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+        <li><a href="#" onclick="showPage('trainers')">Trainers</a></li>
+        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul class="footer-links">
+        <li><a href="#">Weight Training</a></li>
+        <li><a href="#">Cardio Classes</a></li>
+        <li><a href="#">Yoga & Meditation</a></li>
+        <li><a href="#">CrossFit</a></li>
+        <li><a href="#">Zumba</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="#">📍 Lucknow, Uttar Pradesh</a></li>
+        <li><a href="tel:8899657300">📞 8899657300</a></li>
+        <li><a href="mailto:prashantkumar1891pk@gmail.com">📧 prashantkumar1891pk</a></li>
+        <li><a href="#">⏰ 5AM – 11PM Daily</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 <span>PK FitZone</span>. All rights reserved. Lucknow, Uttar Pradesh.</p>
+  </div>
+</footer>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  initReveal();
+}
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => { el.classList.remove('visible'); obs.observe(el); });
+}
+initReveal();
+// ── Home Page Form ─────────────────────────────
+async function submitForm() {
+  const btn = document.querySelector('#formContainer .submit-btn');
+  const data = {
+    first_name : document.getElementById('firstName')?.value?.trim(),
+    last_name  : document.getElementById('lastName')?.value?.trim(),
+    phone      : document.getElementById('phone')?.value?.trim(),
+    email      : document.getElementById('email')?.value?.trim(),
+    plan       : document.querySelector('#formContainer select')?.value,
+    message    : document.querySelector('#formContainer textarea')?.value?.trim()
+  };
+
+  // Validation
+  if (!data.first_name || !data.phone || !data.email || !data.plan || data.plan === 'Select a Plan') {
+    alert('⚠️ Please fill all required fields!'); return;
+  }
+
+  // Loading state
+  if (btn) { btn.textContent = '⏳ Saving...'; btn.disabled = true; }
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/join', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(data)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('formSuccess').style.display  = 'block';
+      document.getElementById('formSuccess').innerHTML = `
+        <div style="font-size:2rem">🎉</div>
+        <div style="color:#4ade80;font-size:1.1rem;font-weight:700;margin:.5rem 0">${json.msg}</div>
+        <div style="color:#888;font-size:.9rem">Hum jald hi aapse contact karenge!</div>
+      `;
+    } else {
+      alert('❌ ' + json.msg);
+    }
+  } catch(e) {
+    alert('❌ Server se connect nahi ho paya!\nTerminal mein "node server.cjs" run karo.');
+  }
+
+  if (btn) { btn.textContent = 'Send Message 🚀'; btn.disabled = false; }
+}
+
+// ── Contact Page Form ───────────────────────────
+async function submitForm2() {
+  const btn = document.querySelector('#formContainer2 .submit-btn');
+  const inputs = document.querySelectorAll('#formContainer2 input');
+  const data = {
+    first_name : inputs[0]?.value?.trim(),
+    last_name  : inputs[1]?.value?.trim(),
+    phone      : inputs[2]?.value?.trim(),
+    email      : inputs[3]?.value?.trim(),
+    plan       : document.querySelector('#formContainer2 select')?.value || 'General Inquiry',
+    message    : document.querySelector('#formContainer2 textarea')?.value?.trim()
+  };
+
+  // Validation
+  if (!data.first_name || !data.phone || !data.email) {
+    alert('⚠️ Name, Phone aur Email required hai!'); return;
+  }
+
+  // Loading state
+  if (btn) { btn.textContent = '⏳ Saving...'; btn.disabled = true; }
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/join', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(data)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      document.getElementById('formContainer2').style.display = 'none';
+      document.getElementById('formSuccess2').style.display  = 'block';
+      document.getElementById('formSuccess2').innerHTML = `
+        <div style="font-size:2rem">🎉</div>
+        <div style="color:#4ade80;font-size:1.1rem;font-weight:700;margin:.5rem 0">${json.msg}</div>
+        <div style="color:#888;font-size:.9rem">Hum 24 ghante mein contact karenge!</div>
+      `;
+    } else {
+      alert('❌ ' + json.msg);
+    }
+  } catch(e) {
+    alert('❌ Server se connect nahi ho paya!\nTerminal mein "node server.cjs" run karo.');
+  }
+
+  if (btn) { btn.textContent = 'Send Message 🚀'; btn.disabled = false; }
+}
+// ── Home Page Form ─────────────────────────────
+async function submitForm() {
+  const btn = document.querySelector('#formContainer .submit-btn');
+  const data = {
+    first_name : document.getElementById('firstName')?.value?.trim(),
+    last_name  : document.getElementById('lastName')?.value?.trim(),
+    phone      : document.getElementById('phone')?.value?.trim(),
+    email      : document.getElementById('email')?.value?.trim(),
+    plan       : document.querySelector('#formContainer select')?.value,
+    message    : document.querySelector('#formContainer textarea')?.value?.trim()
+  };
+
+  // Validation
+  if (!data.first_name || !data.phone || !data.email || !data.plan || data.plan === 'Select a Plan') {
+    alert('⚠️ Please fill all required fields!'); return;
+  }
+
+  // Loading state
+  if (btn) { btn.textContent = '⏳ Saving...'; btn.disabled = true; }
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/join', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(data)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('formSuccess').style.display  = 'block';
+      document.getElementById('formSuccess').innerHTML = `
+        <div style="font-size:2rem">🎉</div>
+        <div style="color:#4ade80;font-size:1.1rem;font-weight:700;margin:.5rem 0">${json.msg}</div>
+        <div style="color:#888;font-size:.9rem">Hum jald hi aapse contact karenge!</div>
+      `;
+    } else {
+      alert('❌ ' + json.msg);
+    }
+  } catch(e) {
+    alert('❌ Server se connect nahi ho paya!\nTerminal mein "node server.cjs" run karo.');
+  }
+
+  if (btn) { btn.textContent = 'Send Message 🚀'; btn.disabled = false; }
+}
+
+// ── Contact Page Form ───────────────────────────
+async function submitForm2() {
+  const btn = document.querySelector('#formContainer2 .submit-btn');
+  const inputs = document.querySelectorAll('#formContainer2 input');
+  const data = {
+    first_name : inputs[0]?.value?.trim(),
+    last_name  : inputs[1]?.value?.trim(),
+    phone      : inputs[2]?.value?.trim(),
+    email      : inputs[3]?.value?.trim(),
+    plan       : document.querySelector('#formContainer2 select')?.value || 'General Inquiry',
+    message    : document.querySelector('#formContainer2 textarea')?.value?.trim()
+  };
+
+  // Validation
+  if (!data.first_name || !data.phone || !data.email) {
+    alert('⚠️ Name, Phone aur Email required hai!'); return;
+  }
+
+  // Loading state
+  if (btn) { btn.textContent = '⏳ Saving...'; btn.disabled = true; }
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/join', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(data)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      document.getElementById('formContainer2').style.display = 'none';
+      document.getElementById('formSuccess2').style.display  = 'block';
+      document.getElementById('formSuccess2').innerHTML = `
+        <div style="font-size:2rem">🎉</div>
+        <div style="color:#4ade80;font-size:1.1rem;font-weight:700;margin:.5rem 0">${json.msg}</div>
+        <div style="color:#888;font-size:.9rem">Hum 24 ghante mein contact karenge!</div>
+      `;
+    } else {
+      alert('❌ ' + json.msg);
+    }
+  } catch(e) {
+    alert('❌ Server se connect nahi ho paya!\nTerminal mein "node server.cjs" run karo.');
+  }
+
+  if (btn) { btn.textContent = 'Send Message 🚀'; btn.disabled = false; }
+}
+</script>
+</body>
+</html>
