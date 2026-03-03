@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(__dirname));
 
 // ── MySQL Connection ──────────────────────────
 const db = mysql.createConnection({
